@@ -32,8 +32,8 @@ public class TeacherEndpoint {
         return new ResponseEntity<>(teacherService.getAllTeachers(),HttpStatus.OK);
     }
 
-    @GetMapping("get/teacherById")
-    ResponseEntity<TeacherEntity> getDoctorId(@PathVariable int teacherId){
+    @GetMapping("/get/teacherById")
+    ResponseEntity<TeacherEntity> getTeacherById(@PathVariable int teacherId){
         return new ResponseEntity<>(teacherService.getTeacherById(teacherId),HttpStatus.OK);
     }
 }

@@ -29,4 +29,10 @@ public class AdvertisementEntity {
     @NotNull
     private int teacherId;
 
+    @NotBlank
+    private String adCategory;
+
+    @NotBlank
+    private String adLevelOfEducation;
+
 }

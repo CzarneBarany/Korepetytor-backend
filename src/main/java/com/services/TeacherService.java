@@ -1,6 +1,7 @@
 package com.services;
 
 import com.entities.TeacherEntity;
+import com.exceptions.EntityNotFoundException;
 import com.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,12 @@ public class TeacherService {
         teacherRepository.save(teacherEntity);
     }
 
-    public TeacherEntity getTeacherById(int teacherId){
-        return teacherRepository.getTeacherEntityByTeacherId(teacherId);
+    public TeacherEntity getTeacherById(int teacherId) {
+        TeacherEntity teacher = teacherRepository.getTeacherEntityByTeacherId(teacherId);
+        if (teacher != null) {
+            return teacher;
+        } else {
+            throw new EntityNotFoundException("Nie znaleziono korepetytora o takim id" + teacherId);
+        }
     }
 }
