@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
@@ -38,5 +39,6 @@ public class TeacherEntity {
 
     private String levelOfEducation;
 
+    @ElementCollection(targetClass=UserEntity.class)
     private List<UserEntity> listOfStudents = new ArrayList<>();
 }

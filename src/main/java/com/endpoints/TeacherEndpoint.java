@@ -21,14 +21,19 @@ public class TeacherEndpoint {
         this.teacherService = teacherService;
     }
 
-    @PostMapping("/add/user")
+    @PostMapping("/add/teacher")
     ResponseEntity addTeacherAccount(@RequestBody TeacherEntity teacherEntity){
         teacherService.addTeacher(teacherEntity);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/get/allUsers")
+    @GetMapping("/get/allTeachers")
     ResponseEntity<List<TeacherEntity>> getAllTeachers(){
         return new ResponseEntity<>(teacherService.getAllTeachers(),HttpStatus.OK);
+    }
+
+    @GetMapping("get/teacherById")
+    ResponseEntity<TeacherEntity> getDoctorId(@PathVariable int teacherId){
+        return new ResponseEntity<>(teacherService.getTeacherById(teacherId),HttpStatus.OK);
     }
 }

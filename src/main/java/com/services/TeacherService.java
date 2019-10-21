@@ -24,4 +24,8 @@ public class TeacherService {
     public void addTeacher(TeacherEntity teacherEntity) {
         teacherRepository.save(teacherEntity);
     }
+
+    public TeacherEntity getTeacherById(int teacherId){
+        return teacherRepository.getTeacherEntityByTeacherId(teacherId);
+    }
 }
