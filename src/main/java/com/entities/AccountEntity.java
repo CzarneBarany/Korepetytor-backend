@@ -16,12 +16,12 @@ import java.util.List;
 @Entity
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TeacherEntity {
+@NoArgsConstructor
+public class AccountEntity {
 
     @Id
-    private int teacherId;
+    private int accountId;
 
     @Email
     private String email;
@@ -35,10 +35,13 @@ public class TeacherEntity {
     @NotBlank
     private String lastname;
 
+    @NotBlank
+    private String city;
+
     private int age;
 
-    private String levelOfEducation;
+    private String phoneNumber;
 
-    @ElementCollection(targetClass=UserEntity.class)
-    private List<UserEntity> listOfStudents = new ArrayList<>();
+    @ElementCollection(targetClass = AdvertisementEntity.class)
+    private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 }

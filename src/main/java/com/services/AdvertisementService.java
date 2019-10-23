@@ -1,7 +1,9 @@
 package com.services;
 
+import com.entities.AccountEntity;
 import com.entities.AdvertisementEntity;
 import com.exceptions.EntityNotFoundException;
+import com.repositories.AccountRepository;
 import com.repositories.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,24 +15,35 @@ public class AdvertisementService {
 
     private AdvertisementRepository advertisementRepository;
 
+    private AccountRepository accountRepository;
+
     @Autowired
-    public AdvertisementService(AdvertisementRepository advertisementRepository) {
+    public AdvertisementService(AdvertisementRepository advertisementRepository, AccountRepository accountRepository) {
         this.advertisementRepository = advertisementRepository;
+        this.accountRepository = accountRepository;
     }
 
-    public void addAdvertisement(AdvertisementEntity advertisementEntity){
+    public void addAdvertisement(AdvertisementEntity advertisementEntity) {
         advertisementRepository.save(advertisementEntity);
     }
 
-    public void deleteAdvertisement(int advertisementId){
+    public void deleteAdvertisement(int advertisementId) {
         AdvertisementEntity advertisement = advertisementRepository.getAdvertisementEntityByAdId(advertisementId);
-        if(advertisement != null){
-        advertisementRepository.delete(advertisement);
-        }
-        else throw new EntityNotFoundException("Nie znaleziono takiego ogłoszenia");
+        if (advertisement != null) {
+            advertisementRepository.delete(advertisement);
+        } else throw new EntityNotFoundException("Nie znaleziono takiego ogłoszenia");
     }
 
-    public List<AdvertisementEntity> getAllAdvertisements(){
+    public List<AdvertisementEntity> getAllAdvertisements() {
         return advertisementRepository.findAll();
+    }
+
+    public List<AdvertisementEntity> getAllAdvertisementsByTeacher(int teacherId) {
+        AccountEntity teacherEntity = accountRepository.getAccountEntityByAccountId(teacherId);
+        if (teacherEntity != null) {
+            return advertisementRepository.getAdvertisementEntitiesByTeacher(teacherEntity);
+        } else {
+            throw new EntityNotFoundException("Nie znaleziono nauczyciela o takim id" + teacherId);
+        }
     }
 }

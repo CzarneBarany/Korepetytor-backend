@@ -27,15 +27,21 @@ public class AdvertisementEndpoint {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/delete/adById")
+    @PostMapping("/delete/ad/{adId}")
     ResponseEntity deleteAdvertisementById(@PathVariable int adId) {
         advertisementService.deleteAdvertisement(adId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/get/allAds")
+    @GetMapping("/get/allAds")
     ResponseEntity<List<AdvertisementEntity>> getAllAdvertisements() {
         List<AdvertisementEntity> listOfAds = advertisementService.getAllAdvertisements();
         return new ResponseEntity<>(listOfAds, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/allAds/{teacherId}")
+    ResponseEntity<List<AdvertisementEntity>> getAllAdvertisementsByTeacher(@PathVariable int teacherId) {
+        List<AdvertisementEntity> listOfAdsByTeacher = advertisementService.getAllAdvertisementsByTeacher(teacherId);
+        return new ResponseEntity<>(listOfAdsByTeacher, HttpStatus.OK);
     }
 }

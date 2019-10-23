@@ -5,10 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,13 +29,17 @@ public class AdvertisementEntity {
     @NotBlank
     private String description;
 
-    @NotNull
-    private int teacherId;
-
     @NotBlank
     private String adCategory;
 
     @NotBlank
     private String adLevelOfEducation;
 
+    private int pricePerHour;
+
+    @NotNull
+    private AccountEntity teacher;
+
+    @ElementCollection(targetClass = AccountEntity.class)
+    List<AccountEntity> listOfStudents = new ArrayList<>();
 }
