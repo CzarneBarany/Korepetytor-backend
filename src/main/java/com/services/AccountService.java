@@ -2,8 +2,13 @@ package com.services;
 
 import com.entities.AccountEntity;
 import com.exceptions.EntityNotFoundException;
+import com.models.LoginModel;
+import com.models.SessionModel;
 import com.repositories.AccountRepository;
+import com.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,27 +17,49 @@ import java.util.List;
 public class AccountService {
 
     private AccountRepository accountRepository;
+    private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.accountRepository = accountRepository;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public List<AccountEntity> getAllAccounts(){
+    public List<AccountEntity> getAllAccounts() {
         return accountRepository.findAll();
     }
 
-    public void addAccount(AccountEntity accountEntity){
+    public void addAccount(AccountEntity accountEntity) {
         accountRepository.save(accountEntity);
     }
 
-    public void deleteUser(Integer accountId){
-        if(accountRepository.existsById(accountId)) {
+    public void deleteUser(Integer accountId) {
+        if (accountRepository.existsById(accountId)) {
             accountRepository.delete(accountRepository.getAccountEntityByAccountId(accountId));
-        }
-        else{
+        } else {
             throw new EntityNotFoundException("Nie znaleziono konta o takim id" + accountId);
         }
+    }
+
+    public SessionModel login(LoginModel loginModel) {
+        String email = loginModel.getEmail();
+        String password = loginModel.getPassword();
+
+        AccountEntity accountEntity = accountRepository.getAccountEntityByEmail(email);
+        SessionModel sessionModel = new SessionModel();
+
+        if(accountEntity != null){
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
+            sessionModel.setAccountId(accountEntity.getAccountId());
+            sessionModel.setRole(accountEntity.getRole());
+            sessionModel.setJwtToken(jwtTokenProvider.createToken(email, accountEntity.getRole()));
+        }else{
+            throw new EntityNotFoundException("Nie znaleziono konta o takim emailu");
+        }
+
+        return sessionModel;
     }
 
 }

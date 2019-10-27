@@ -1,5 +1,6 @@
 package com.entities;
 
+import com.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,8 @@ public class AccountEntity {
     private int age;
 
     private String phoneNumber;
+
+    private Role role;
 
     @ElementCollection(targetClass = AdvertisementEntity.class)
     private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
