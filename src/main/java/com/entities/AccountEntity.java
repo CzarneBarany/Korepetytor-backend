@@ -41,3 +41,4 @@ public class AccountEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 }
+

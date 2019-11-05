@@ -29,9 +29,11 @@ public class AdvertisementService {
 
     public void deleteAdvertisement(int advertisementId) {
         AdvertisementEntity advertisement = advertisementRepository.getAdvertisementEntityByAdId(advertisementId);
-        if (advertisement != null) {
-            advertisementRepository.delete(advertisement);
-        } else throw new EntityNotFoundException("Nie znaleziono takiego ogłoszenia");
+        if (advertisement == null) {
+            throw new EntityNotFoundException("Nie znaleziono takiego ogłoszenia");
+        }
+
+        advertisementRepository.delete(advertisement);
     }
 
     public List<AdvertisementEntity> getAllAdvertisements() {
@@ -40,10 +42,10 @@ public class AdvertisementService {
 
     public List<AdvertisementEntity> getAllAdvertisementsByTeacher(int teacherId) {
         AccountEntity teacherEntity = accountRepository.getAccountEntityByAccountId(teacherId);
-        if (teacherEntity != null) {
-            return advertisementRepository.getAdvertisementEntitiesByTeacher(teacherEntity);
-        } else {
+        if (teacherEntity == null) {
             throw new EntityNotFoundException("Nie znaleziono nauczyciela o takim id" + teacherId);
         }
+
+        return advertisementRepository.getAdvertisementEntitiesByTeacher(teacherEntity);
     }
 }

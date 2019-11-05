@@ -46,20 +46,27 @@ public class AccountService {
     public SessionModel login(LoginModel loginModel) {
         String email = loginModel.getEmail();
         String password = loginModel.getPassword();
-
         AccountEntity accountEntity = accountRepository.getAccountEntityByEmail(email);
-        SessionModel sessionModel = new SessionModel();
 
-        if(accountEntity != null){
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
-            sessionModel.setAccountId(accountEntity.getAccountId());
-            sessionModel.setRole(accountEntity.getRole());
-            sessionModel.setJwtToken(jwtTokenProvider.createToken(email, accountEntity.getRole()));
-        }else{
+        if(accountEntity == null){
             throw new EntityNotFoundException("Nie znaleziono konta o takim emailu");
         }
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
+        SessionModel sessionModel = new SessionModel();
+        sessionModel.setAccountId(accountEntity.getAccountId());
+        sessionModel.setRole(accountEntity.getRole());
+        sessionModel.setJwtToken(jwtTokenProvider.createToken(email, accountEntity.getRole()));
 
         return sessionModel;
     }
 
+    public AccountEntity getAccountByAccountId(int id) {
+        AccountEntity accountEntity = accountRepository.getAccountEntityByAccountId(id);
+        if(accountEntity == null){
+            throw new EntityNotFoundException("Nie znaleziono konta o takim id");
+        }
+
+        return accountEntity;
+    }
 }

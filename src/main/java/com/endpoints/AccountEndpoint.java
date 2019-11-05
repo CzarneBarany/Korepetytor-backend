@@ -29,6 +29,11 @@ public class AccountEndpoint {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping("/get/account/{id}")
+    ResponseEntity<AccountEntity> getAccountByAccountId(@PathVariable int id){
+    return new ResponseEntity<>(accountService.getAccountByAccountId(id), HttpStatus.OK);
+    }
+
     @GetMapping("/get/allAccounts")
     ResponseEntity<List<AccountEntity>> getAllAccounts() {
         return new ResponseEntity<>(accountService.getAllAccounts(), HttpStatus.OK);

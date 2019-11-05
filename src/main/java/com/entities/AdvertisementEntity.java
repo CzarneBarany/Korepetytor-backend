@@ -22,10 +22,10 @@ public class AdvertisementEntity {
     private String description;
 
     @NotBlank
-    private String adCategory;
+    private String category;
 
     @NotBlank
-    private String adLevelOfEducation;
+    private String levelOfEducation;
 
     private int pricePerHour;
 
