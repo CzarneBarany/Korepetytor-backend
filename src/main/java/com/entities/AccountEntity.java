@@ -1,10 +1,7 @@
 package com.entities;
 
 import com.models.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,9 +11,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AccountEntity {
 
     @Id
@@ -44,6 +38,6 @@ public class AccountEntity {
 
     private Role role;
 
-    @ElementCollection(targetClass = AdvertisementEntity.class)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 }

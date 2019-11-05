@@ -1,21 +1,14 @@
 package com.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdvertisementEntity {
 
     @Id
@@ -36,9 +29,9 @@ public class AdvertisementEntity {
 
     private int pricePerHour;
 
-    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     private AccountEntity teacher;
 
-    @ElementCollection(targetClass = AccountEntity.class)
+    @OneToMany(cascade = CascadeType.ALL)
     List<AccountEntity> listOfStudents = new ArrayList<>();
 }
