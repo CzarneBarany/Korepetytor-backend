@@ -27,6 +27,12 @@ public class AdvertisementEndpoint {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PostMapping("/edit/ad")
+    ResponseEntity editAdvertisement(@RequestBody AdvertisementEntity advertisementEntity) {
+        advertisementService.editAdvertisement(advertisementEntity);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping("/delete/ad/{adId}")
     ResponseEntity deleteAdvertisementById(@PathVariable int adId) {
         advertisementService.deleteAdvertisement(adId);

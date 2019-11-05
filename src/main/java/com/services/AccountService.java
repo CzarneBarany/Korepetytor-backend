@@ -78,4 +78,8 @@ public class AccountService {
 
         return accountEntity;
     }
+
+    public void editAccount(AccountEntity accountEntity) {
+        accountRepository.save(accountEntity);
+    }
 }

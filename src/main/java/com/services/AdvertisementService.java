@@ -48,4 +48,8 @@ public class AdvertisementService {
 
         return advertisementRepository.getAdvertisementEntitiesByTeacher(teacherEntity);
     }
+
+    public void editAdvertisement(AdvertisementEntity advertisementEntity) {
+        advertisementRepository.save(advertisementEntity);
+    }
 }
