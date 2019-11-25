@@ -29,6 +29,10 @@ public class AdvertisementEntity {
 
     private int pricePerHour;
 
+    private boolean homeVisitsPossibility;
+
+    private String availability;
+
     @OneToOne(cascade = CascadeType.ALL)
     private AccountEntity teacher;
 
