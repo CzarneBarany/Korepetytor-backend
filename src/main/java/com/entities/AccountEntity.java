@@ -3,11 +3,12 @@ package com.entities;
 import com.models.Role;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -37,8 +38,6 @@ public class AccountEntity {
     private String phoneNumber;
 
     private Role role;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 }
+
 

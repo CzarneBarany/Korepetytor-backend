@@ -52,4 +52,14 @@ public class AdvertisementService {
     public void editAdvertisement(AdvertisementEntity advertisementEntity) {
         advertisementRepository.save(advertisementEntity);
     }
+
+    public List<AdvertisementEntity> getAllAdvertisementsByStudent(int accountId) {
+        AccountEntity studentEntity = accountRepository.getAccountEntityByAccountId(accountId);
+
+        if(studentEntity == null){
+            throw new EntityNotFoundException("Nie znaleziono konta o takim id: " + accountId);
+        }
+
+        return advertisementRepository.getAdvertisementEntitiesByListOfStudents(studentEntity);
+    }
 }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface AdvertisementRepository extends JpaRepository<AdvertisementEntity, Integer> {
     AdvertisementEntity getAdvertisementEntityByAdId(int adId);
     List<AdvertisementEntity> getAdvertisementEntitiesByTeacher(AccountEntity accountEntity);
+    List<AdvertisementEntity> getAdvertisementEntitiesByListOfStudents(AccountEntity accountEntity);
 }

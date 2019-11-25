@@ -33,7 +33,7 @@ public class AdvertisementEndpoint {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/delete/ad/{adId}")
+    @GetMapping("/delete/ad/{adId}")
     ResponseEntity deleteAdvertisementById(@PathVariable int adId) {
         advertisementService.deleteAdvertisement(adId);
         return new ResponseEntity(HttpStatus.OK);
@@ -45,9 +45,15 @@ public class AdvertisementEndpoint {
         return new ResponseEntity<>(listOfAds, HttpStatus.OK);
     }
 
-    @GetMapping("/get/allAds/{teacherId}")
+    @GetMapping("/get/allAds/teacher/{teacherId}")
     ResponseEntity<List<AdvertisementEntity>> getAllAdvertisementsByTeacher(@PathVariable int teacherId) {
         List<AdvertisementEntity> listOfAdsByTeacher = advertisementService.getAllAdvertisementsByTeacher(teacherId);
         return new ResponseEntity<>(listOfAdsByTeacher, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/allAds/student/{accountId}")
+    ResponseEntity<List<AdvertisementEntity>> getAllAdvertisementsByStudentId(@PathVariable int accountId) {
+        List<AdvertisementEntity> listOfAds = advertisementService.getAllAdvertisementsByStudent(accountId);
+        return new ResponseEntity<>(listOfAds, HttpStatus.OK);
     }
 }

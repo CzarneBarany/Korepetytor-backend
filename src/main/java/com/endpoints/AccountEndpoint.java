@@ -45,13 +45,13 @@ public class AccountEndpoint {
         return new ResponseEntity<>(accountService.getAllAccounts(), HttpStatus.OK);
     }
 
-    @PostMapping("/delete/account/{id}")
+    @GetMapping("/delete/account/{id}")
     ResponseEntity deleteAccount(@PathVariable int id) {
         accountService.deleteUser(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     ResponseEntity<SessionModel> login(@RequestBody LoginModel loginModel) {
         return new ResponseEntity<>(accountService.login(loginModel), HttpStatus.OK);
     }
