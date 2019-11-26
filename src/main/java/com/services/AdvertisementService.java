@@ -43,12 +43,11 @@ public class AdvertisementService {
     }
 
     public List<AdvertisementEntity> getAllAdvertisementsByTeacher(int teacherId) {
-        AccountEntity teacherEntity = accountRepository.getAccountEntityByAccountId(teacherId);
-        if (teacherEntity == null) {
-            throw new EntityNotFoundException("Nie znaleziono nauczyciela o takim id" + teacherId);
+        if (accountRepository.getAccountEntityByAccountId(teacherId) == null) {
+            throw new EntityNotFoundException("Nie znaleziono nauczyciela o takim id: " + teacherId);
         }
 
-        return advertisementRepository.getAdvertisementEntitiesByTeacher(teacherEntity);
+        return advertisementRepository.getAdvertisementEntitiesByTeacherId(teacherId);
     }
 
     public void editAdvertisement(AdvertisementEntity advertisementEntity) {

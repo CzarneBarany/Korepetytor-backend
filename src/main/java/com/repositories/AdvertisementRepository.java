@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AdvertisementRepository extends JpaRepository<AdvertisementEntity, Integer> {
     AdvertisementEntity getAdvertisementEntityByAdId(int adId);
-    List<AdvertisementEntity> getAdvertisementEntitiesByTeacher(AccountEntity accountEntity);
+    List<AdvertisementEntity> getAdvertisementEntitiesByTeacherId(int teacherId);
     List<AdvertisementEntity> getAdvertisementEntitiesByListOfStudents(AccountEntity accountEntity);
     List<AdvertisementEntity> getAdvertisementEntitiesByCategoryAndLevelOfEducation(String category, String levelOfEducation);
 }

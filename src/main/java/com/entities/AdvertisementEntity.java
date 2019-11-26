@@ -37,8 +37,7 @@ public class AdvertisementEntity {
 
     private String yCoord;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private AccountEntity teacher;
+    private int teacherId;
 
     @OneToMany(cascade = CascadeType.ALL)
     List<AccountEntity> listOfStudents = new ArrayList<>();
