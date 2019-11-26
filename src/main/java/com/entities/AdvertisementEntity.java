@@ -33,6 +33,10 @@ public class AdvertisementEntity {
 
     private String availability;
 
+    private String xCoord;
+
+    private String yCoord;
+
     @OneToOne(cascade = CascadeType.ALL)
     private AccountEntity teacher;
 

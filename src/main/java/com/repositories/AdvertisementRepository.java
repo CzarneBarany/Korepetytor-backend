@@ -12,4 +12,5 @@ public interface AdvertisementRepository extends JpaRepository<AdvertisementEnti
     AdvertisementEntity getAdvertisementEntityByAdId(int adId);
     List<AdvertisementEntity> getAdvertisementEntitiesByTeacher(AccountEntity accountEntity);
     List<AdvertisementEntity> getAdvertisementEntitiesByListOfStudents(AccountEntity accountEntity);
+    List<AdvertisementEntity> getAdvertisementEntitiesByCategoryAndLevelOfEducation(String category, String levelOfEducation);
 }

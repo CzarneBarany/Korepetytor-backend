@@ -56,4 +56,15 @@ public class AdvertisementEndpoint {
         List<AdvertisementEntity> listOfAds = advertisementService.getAllAdvertisementsByStudent(accountId);
         return new ResponseEntity<>(listOfAds, HttpStatus.OK);
     }
+
+    @GetMapping("/get/allAds/categoryAndLevelOfEducation/{category}/{levelOfEducation}")
+    ResponseEntity<List<AdvertisementEntity>> getAllAdvertisementsByCategoryAndLevelOfEducation(@PathVariable String category, @PathVariable String levelOfEducation) {
+        return new ResponseEntity<>(advertisementService.getAllAdvertisementsByCategoryAndLevelOfEducation(category, levelOfEducation), HttpStatus.OK);
+    }
+
+    @GetMapping("/add/studentToAdvertisement/{adId}/{studentId}")
+    ResponseEntity addStudentToAdvertisement(@PathVariable int adId, @PathVariable int studentId) {
+        advertisementService.addStudentToAdvertisement(adId, studentId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

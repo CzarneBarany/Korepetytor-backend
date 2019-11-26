@@ -5,12 +5,14 @@ import com.entities.AdvertisementEntity;
 import com.exceptions.EntityNotFoundException;
 import com.repositories.AccountRepository;
 import com.repositories.AdvertisementRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class AdvertisementService {
 
     private AdvertisementRepository advertisementRepository;
@@ -55,11 +57,24 @@ public class AdvertisementService {
 
     public List<AdvertisementEntity> getAllAdvertisementsByStudent(int accountId) {
         AccountEntity studentEntity = accountRepository.getAccountEntityByAccountId(accountId);
-
-        if(studentEntity == null){
+        if (studentEntity == null) {
             throw new EntityNotFoundException("Nie znaleziono konta o takim id: " + accountId);
         }
 
         return advertisementRepository.getAdvertisementEntitiesByListOfStudents(studentEntity);
+    }
+
+    public List<AdvertisementEntity> getAllAdvertisementsByCategoryAndLevelOfEducation(String category, String levelOfEducation) {
+        return advertisementRepository.getAdvertisementEntitiesByCategoryAndLevelOfEducation(category, levelOfEducation);
+    }
+
+    public void addStudentToAdvertisement(int adId, int studentId) {
+        AccountEntity studentEntity = accountRepository.getAccountEntityByAccountId(studentId);
+        AdvertisementEntity advertisementEntity = advertisementRepository.getAdvertisementEntityByAdId(adId);
+
+        List<AccountEntity> listOfStudents = advertisementEntity.getListOfStudents();
+        listOfStudents.add(studentEntity);
+        advertisementEntity.setListOfStudents(listOfStudents);
+        log.debug("Dodaje studenta o id: " + studentId + " do ogłoszenia o id: " + adId);
     }
 }
