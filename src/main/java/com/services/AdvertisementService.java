@@ -75,5 +75,6 @@ public class AdvertisementService {
         listOfStudents.add(studentEntity);
         advertisementEntity.setListOfStudents(listOfStudents);
         log.debug("Dodaje studenta o id: " + studentId + " do ogłoszenia o id: " + adId);
+        advertisementRepository.save(advertisementEntity);
     }
 }
