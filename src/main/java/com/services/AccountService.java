@@ -7,6 +7,7 @@ import com.models.LoginModel;
 import com.models.SessionModel;
 import com.repositories.AccountRepository;
 import com.security.JwtTokenProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AccountService {
 
     private AccountRepository accountRepository;
@@ -40,6 +42,7 @@ public class AccountService {
             throw new AccountAlreadyExistsException("Istnieje juz konto o takim adresie email");
         }
 
+        log.debug("Tworze nowe konto użytkownika!");
         accountEntity.setPassword(passwordEncoder.encode(accountEntity.getPassword()));
         accountRepository.save(accountEntity);
     }
@@ -47,12 +50,14 @@ public class AccountService {
     public void deleteUser(Integer accountId) {
         if (accountRepository.existsById(accountId)) {
             accountRepository.delete(accountRepository.getAccountEntityByAccountId(accountId));
+            log.debug("Usuwam usera o id:" + accountId);
         } else {
             throw new EntityNotFoundException("Nie znaleziono konta o takim id" + accountId);
         }
     }
 
     public SessionModel login(LoginModel loginModel) {
+        log.debug("LOGOWANIE - START");
         String email = loginModel.getEmail();
         String password = loginModel.getPassword();
         AccountEntity accountEntity = accountRepository.getAccountEntityByEmail(email);
@@ -67,6 +72,7 @@ public class AccountService {
         sessionModel.setRole(accountEntity.getRole());
         sessionModel.setJwtToken(jwtTokenProvider.createToken(email, accountEntity.getRole()));
 
+        log.debug("LOGOWANIE - END");
         return sessionModel;
     }
 
@@ -81,5 +87,6 @@ public class AccountService {
 
     public void editAccount(AccountEntity accountEntity) {
         accountRepository.save(accountEntity);
+        log.debug("Edytuje konto o id:" + accountEntity.getAccountId());
     }
 }
