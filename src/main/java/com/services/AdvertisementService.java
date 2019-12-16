@@ -35,6 +35,7 @@ public class AdvertisementService {
             throw new EntityNotFoundException("Nie znaleziono takiego ogłoszenia");
         }
 
+        log.debug("Usuwam ogłoszenie o id:" + advertisementId);
         advertisementRepository.delete(advertisement);
     }
 
@@ -51,6 +52,7 @@ public class AdvertisementService {
     }
 
     public void editAdvertisement(AdvertisementEntity advertisementEntity) {
+        log.debug("Edytuje ogłoszenie o id:" + advertisementEntity.getAdId());
         advertisementRepository.save(advertisementEntity);
     }
 
@@ -75,5 +77,6 @@ public class AdvertisementService {
         listOfStudents.add(studentEntity);
         advertisementEntity.setListOfStudents(listOfStudents);
         log.debug("Dodaje studenta o id: " + studentId + " do ogłoszenia o id: " + adId);
+        advertisementRepository.save(advertisementEntity);
     }
 }
