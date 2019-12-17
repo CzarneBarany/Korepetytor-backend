@@ -39,5 +39,3 @@ public class AccountEntity {
 
     private Role role;
 }
-
-

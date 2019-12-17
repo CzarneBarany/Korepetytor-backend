@@ -33,9 +33,9 @@ public class AdvertisementEntity {
 
     private String availability;
 
-    private String xCoord;
+    private String xcoord;
 
-    private String yCoord;
+    private String ycoord;
 
     private int teacherId;
 
